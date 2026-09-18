@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DC Super Mart</title>
+
+<style>
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f6f1e5;
+color:#111;
+}
+
+header{
+background:#050505;
+color:white;
+padding:14px;
+position:sticky;
+top:0;
+z-index:100;
+box-shadow:0 3px 15px #0005;
+}
+
+.header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:8px;
+}
+
+.logo{
+color:#d4af37;
+font-size:23px;
+font-weight:bold;
+}
+
+.tagline{
+font-size:11px;
+color:#ddd;
+margin-top:3px;
+}
+
+button{
+border:0;
+border-radius:8px;
+padding:11px 14px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.gold{
+background:#d4af37;
+color:#000;
+}
+
+.black{
+background:#111;
+color:#fff;
+}
+
+.hero{
+margin:14px;
+padding:35px 18px;
+border-radius:16px;
+color:white;
+background:
+linear-gradient(#0009,#0009),
+url("https://images.unsplash.com/photo-1601598851547-4302969d3c9a?auto=format&fit=crop&w=1200&q=80")
+center/cover;
+}
+
+.hero h1{
+font-size:30px;
+margin:0 0 8px;
+}
+
+.hero p{
+margin:0 0 20px;
+}
+
+.searchbox{
+padding:10px 14px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:12px;
+margin:5px 0 10px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+}
+
+.categories{
+display:flex;
+gap:7px;
+overflow-x:auto;
+padding:5px 0 10px;
+}
+
+.category{
+white-space:nowrap;
+background:white;
+border:1px solid #d4af37;
+border-radius:20px;
+}
+
+.category.active{
+background:#d4af37;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+padding:10px 14px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 2px 8px #0002;
+}
+
+.card img{
+width:100%;
+height:135px;
+object-fit:cover;
+}
+
+.cardbody{
+padding:10px;
+}
+
+.card h3{
+margin:0 0 4px;
+font-size:15px;
+}
+
+.urdu{
+font-size:12px;
+color:#777;
+}
+
+.weight{
+font-size:12px;
+margin-top:4px;
+}
+
+.price{
+color:#9b7710;
+font-size:17px;
+font-weight:bold;
+margin:7px 0;
+}
+
+.cart{
+margin:14px;
+background:white;
+padding:14px;
+border-radius:14px;
+box-shadow:0 2px 8px #0002;
+}
+
+.cartitem{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:8px;
+padding:10px 0;
+border-bottom:1px solid #ddd;
+}
+
+.qty button{
+padding:5px 9px;
+}
+
+.total{
+font-size:20px;
+font-weight:bold;
+text-align:right;
+margin:14px 0;
+}
+
+.checkout{
+margin:14px;
+background:white;
+padding:14px;
+border-radius:14px;
+box-shadow:0 2px 8px #0002;
+}
+
+.whatsapp{
+background:#25D366;
+color:white;
+width:100%;
+font-size:17px;
+padding:14px;
+}
+
+.empty{
+text-align:center;
+color:#777;
+padding:15px;
+}
+
+footer{
+background:#050505;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:25px;
+}
+
+#adminPage{
+display:none;
+}
+
+.admin{
+margin:14px;
+background:white;
+padding:14px;
+border-radius:14px;
+}
+
+.adminnav{
+display:flex;
+gap:7px;
+overflow-x:auto;
+margin-bottom:15px;
+}
+
+.adminSection{
+display:none;
+}
+
+.adminSection.active{
+display:block;
+}
+
+.productAdmin{
+border-bottom:1px solid #ddd;
+padding:12px 0;
+}
+
+.orderAdmin{
+border:1px solid #ddd;
+border-radius:10px;
+padding:12px;
+margin:10px 0;
+}
+
+.photoBox{
+border:2px dashed #d4af37;
+border-radius:10px;
+padding:15px;
+text-align:center;
+margin-bottom:10px;
+}
+
+.preview{
+width:100%;
+max-height:180px;
+object-fit:cover;
+border-radius:8px;
+display:none;
+margin-top:10px;
+}
+
+.status{
+display:inline-block;
+padding:6px 10px;
+border-radius:15px;
+font-size:12px;
+font-weight:bold;
+}
+
+.processing{
+background:#fff0b3;
+}
+
+.ontheway{
+background:#cfe8ff;
+}
+
+.delivered{
+background:#c9f5c9;
+}
+
+@media(min-width:700px){
+
+.products{
+grid-template-columns:repeat(4,1fr);
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- CUSTOMER PAGE -->
+
+<div id="customerPage">
+
+<header>
+
+<div class="header">
+
+<div>
+<div class="logo">DC Super Mart</div>
+<div class="tagline">
+Premium Pakistani Grocery Store
+</div>
+</div>
+
+<div>
+<button class="gold" onclick="shareStore()">
+Share
+</button>
+
+<button class="black" onclick="openAdmin()">
+Admin
+</button>
+</div>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<h1>DC Super Mart</h1>
+
+<p>
+Quality Grocery • Easy Ordering • Home Delivery
+</p>
+
+<button
+class="gold"
+onclick="document.getElementById('products').scrollIntoView()">
+
+Shop Now
+
+</button>
+
+</section>
+
+
+<div class="searchbox">
+
+<input
+id="search"
+placeholder="Search grocery products..."
+oninput="renderProducts()"
+>
+
+<div class="categories">
+
+<button
+class="category active"
+onclick="setCategory('All',this)">
+All
+</button>
+
+<button
+class="category"
+onclick="setCategory('Grocery',this)">
+Grocery
+</button>
+
+<button
+class="category"
+onclick="setCategory('Rice & Flour',this)">
+Rice & Flour
+</button>
+
+<button
+class="category"
+onclick="setCategory('Oil & Ghee',this)">
+Oil & Ghee
+</button>
+
+<button
+class="category"
+onclick="setCategory('Dairy',this)">
+Dairy
+</button>
+
+<button
+class="category"
+onclick="setCategory('Beverages',this)">
+Beverages
+</button>
+
+<button
+class="category"
+onclick="setCategory('Snacks',this)">
+Snacks
+</button>
+
+<button
+class="category"
+onclick="setCategory('Household',this)">
+Household
+</button>
+
+</div>
+
+</div>
+
+
+<div id="products" class="products"></div>
+
+
+<!-- CART -->
+
+<div class="cart">
+
+<h2>🛒 Your Cart</h2>
+
+<div id="cartItems"></div>
+
+<div class="total">
+Total: Rs <span id="cartTotal">0</span>
+</div>
+
+</div>
+
+
+<!-- CHECKOUT -->
+
+<div class="checkout">
+
+<h2>📦 Checkout</h2>
+
+<input
+id="customerName"
+placeholder="Full Name"
+>
+
+<input
+id="customerPhone"
+placeholder="Phone Number"
+>
+
+<input
+id="customerAddress"
+placeholder="Full Delivery Address"
+>
+
+<input
+id="customerCity"
+placeholder="City / Area"
+>
+
+<select id="paymentMethod">
+
+<option value="Cash on Delivery">
+Cash on Delivery
+</option>
+
+<option value="Bank Transfer">
+Bank Transfer
+</option>
+
+<option value="Other">
+Other
+</option>
+
+</select>
+
+<textarea
+id="customerNote"
+placeholder="Order Note (optional)">
+</textarea>
+
+
+<button
+class="whatsapp"
+onclick="placeOrder()">
+
+📱 Confirm Order on WhatsApp
+
+</button>
+
+</div>
+
+
+<footer>
+
+<b>DC Super Mart</b>
+<br>
+Premium Pakistani Grocery Store
+<br><br>
+© 2026 DC Super Mart
+
+</footer>
+
+</div>
+
+
+
+<!-- ADMIN PAGE -->
+
+<div id="adminPage">
+
+<header>
+
+<div class="header">
+
+<div class="logo">
+DC Super Mart Admin
+</div>
+
+<button
+class="gold"
+onclick="closeAdmin()">
+
+Back to Store
+
+</button>
+
+</div>
+
+</header>
+
+
+<div class="admin">
+
+<!-- LOGIN -->
+
+<div id="adminLogin">
+
+<h2>🔐 Admin Login</h2>
+
+<input
+id="adminPassword"
+type="password"
+placeholder="Admin Password"
+>
+
+<button
+class="gold"
+onclick="loginAdmin()">
+
+Login
+
+</button>
+
+</div>
+
+
+<!-- ADMIN CONTENT -->
+
+<div id="adminContent" style="display:none">
+
+<div class="adminnav">
+
+<button
+class="gold"
+onclick="showAdmin('ordersSection')">
+
+Orders
+
+</button>
+
+<button
+class="black"
+onclick="showAdmin('productsSection')">
+
+Products
+
+</button>
+
+<button
+class="black"
+onclick="showAdmin('settingsSection')">
+
+Settings
+
+</button>
+
+</div>
+
+
+<!-- ORDERS -->
+
+<div
+id="ordersSection"
+class="adminSection active">
+
+<h2>📦 Customer Orders</h2>
+
+<h3>🟡 Processing</h3>
+
+<div id="processingOrders"></div>
+
+
+<h3>🚚 On the way</h3>
+
+<div id="wayOrders"></div>
+
+
+<h3>🟢 Delivered</h3>
+
+<div id="deliveredOrders"></div>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div
+id="productsSection"
+class="adminSection">
+
+<h2>🛍 Add New Product</h2>
+
+<input
+id="productName"
+placeholder="Product Name"
+>
+
+<input
+id="productUrdu"
+placeholder="Urdu Name"
+>
+
+<input
+id="productPrice"
+type="number"
+placeholder="Price"
+>
+
+<input
+id="productWeight"
+placeholder="Weight e.g. 1 kg"
+>
+
+<select id="productCategory">
+
+<option>Grocery</option>
+<option>Rice & Flour</option>
+<option>Oil & Ghee</option>
+<option>Dairy</option>
+<option>Beverages</option>
+<option>Snacks</option>
+<option>Household</option>
+
+</select>
+
+
+<div class="photoBox">
+
+<b>📸 Select Product Photo</b>
+
+<p>
+Phone Gallery سے تصویر منتخب کریں
+</p>
+
+<input
+id="productPhoto"
+type="file"
+accept="image/*"
+onchange="previewProductPhoto(event)"
+>
+
+<img
+id="photoPreview"
+class="preview"
+>
+
+</div>
+
+
+<button
+class="gold"
+onclick="addProduct()">
+
+Add Product
+
+</button>
+
+
+<h3>Current Products</h3>
+
+<div id="adminProducts"></div>
+
+</div>
+
+
+<!-- SETTINGS -->
+
+<div
+id="settingsSection"
+class="adminSection">
+
+<h2>⚙️ Store Settings</h2>
+
+<input
+id="settingStoreName"
+placeholder="Store Name"
+>
+
+<input
+id="settingTagline"
+placeholder="Store Tagline"
+>
+
+<button
+class="gold"
+onclick="saveSettings()">
+
+Save Settings
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script type="module">
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+doc,
+updateDoc,
+deleteDoc,
+setDoc,
+getDoc
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+/* FIREBASE */
+
+const firebaseConfig={
+
+apiKey:
+"AIzaSyBm_62mmqifhGYQhWjP6k6gLnwUEEIGwTA",
+
+authDomain:
+"dc-super-mart.firebaseapp.com",
+
+projectId:
+"dc-super-mart",
+
+storageBucket:
+"dc-super-mart.firebasestorage.app",
+
+messagingSenderId:
+"608035223366",
+
+appId:
+"1:608035223366:web:360ccfe99a9cc43ce2d747",
+
+measurementId:
+"G-JCJ8D5FB06"
+
+};
+
+
+const app=initializeApp(firebaseConfig);
+
+const db=getFirestore(app);
+
+
+const ADMIN_WHATSAPP="923142908164";
+
+const ADMIN_PASSWORD="123456";
+
+
+let products=[];
+
+let cart=[];
+
+let currentCategory="All";
+
+
+/* DEFAULT PRODUCTS */
+
+const defaultProducts=[
+
+{
+name:"Basmati Rice",
+urdu:"باسمتی چاول",
+price:390,
+weight:"1 kg",
+category:"Rice & Flour",
+image:"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Wheat Flour",
+urdu:"گندم کا آٹا",
+price:1550,
+weight:"10 kg",
+category:"Rice & Flour",
+image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Cooking Oil",
+urdu:"کوکنگ آئل",
+price:610,
+weight:"1 litre",
+category:"Oil & Ghee",
+image:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Desi Ghee",
+urdu:"دیسی گھی",
+price:2450,
+weight:"1 kg",
+category:"Oil & Ghee",
+image:"https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Sugar",
+urdu:"چینی",
+price:185,
+weight:"1 kg",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1581268492710-0a9b5e8f2a15?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Daal Masoor",
+urdu:"دال مسور",
+price:330,
+weight:"1 kg",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1585997579439-0d7f1a5f4c5b?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Daal Moong",
+urdu:"دال مونگ",
+price:390,
+weight:"1 kg",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Daal Chana",
+urdu:"دال چنا",
+price:300,
+weight:"1 kg",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1604908177522-0403f0f9d0f5?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Tea",
+urdu:"چائے",
+price:690,
+weight:"450 g",
+category:"Beverages",
+image:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Milk",
+urdu:"دودھ",
+price:290,
+weight:"1 litre",
+category:"Dairy",
+image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Biscuits",
+urdu:"بسکٹ",
+price:70,
+weight:"1 pack",
+category:"Snacks",
+image:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Mineral Water",
+urdu:"منرل واٹر",
+price:100,
+weight:"1.5 litre",
+category:"Beverages",
+image:"https://images.unsplash.com/photo-1564419320461-6870880221ad?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Washing Powder",
+urdu:"واشنگ پاؤڈر",
+price:390,
+weight:"1 kg",
+category:"Household",
+image:"https://images.unsplash.com/photo-1585832770485-e68a5dbfad52?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Biryani Masala",
+urdu:"بریانی مصالحہ",
+price:123,
+weight:"60 g",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Salt",
+urdu:"نمک",
+price:80,
+weight:"800 g",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1518110925495-5fe2a2b4d8e7?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Red Chilli Powder",
+urdu:"لال مرچ",
+price:180,
+weight:"200 g",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Turmeric Powder",
+urdu:"ہلدی",
+price:150,
+weight:"200 g",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Ketchup",
+urdu:"کیچپ",
+price:320,
+weight:"500 g",
+category:"Grocery",
+image:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Lemon Drink",
+urdu:"لیموں ڈرنک",
+price:150,
+weight:"1.5 litre",
+category:"Beverages",
+image:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80"
+},
+
+{
+name:"Dish Wash",
+urdu:"برتن دھونے والا لیکوئڈ",
+price:280,
+weight:"500 ml",
+category:"Household",
+image:"https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=600&q=80"
+}
+
+];
+
+
+/* LOAD PRODUCTS */
+
+async function loadProducts(){
+
+try{
+
+const snap=
+await getDocs(collection(db,"products"));
+
+if(snap.empty){
+
+for(const p of defaultProducts){
+
+await addDoc(
+collection(db,"products"),
+p
+);
+
+}
+
+const newSnap=
+await getDocs(collection(db,"products"));
+
+products=
+newSnap.docs.map(d=>({
+id:d.id,
+...d.data()
+}));
+
+}else{
+
+products=
+snap.docs.map(d=>({
+id:d.id,
+...d.data()
+}));
+
+}
+
+renderProducts();
+renderCart();
+
+}
+catch(error){
+
+console.log(error);
+
+products=
+defaultProducts.map((p,i)=>({
+id:"local"+i,
+...p
+}));
+
+renderProducts();
+renderCart();
+
+}
+
+}
+
+
+/* CATEGORY */
+
+window.setCategory=function(category,button){
+
+currentCategory=category;
+
+document
+.querySelectorAll(".category")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+button.classList.add("active");
+
+renderProducts();
+
+};
+
+
+/* RENDER PRODUCTS */
+
+window.renderProducts=function(){
+
+const box=
+document.getElementById("products");
+
+const search=
+document.getElementById("search")
+.value
+.toLowerCase();
+
+
+const list=
+products.filter(p=>{
+
+const categoryOK=
+currentCategory==="All" ||
+p.category===currentCategory;
+
+const searchOK=
+(p.name||"")
+.toLowerCase()
+.includes(search);
+
+return categoryOK && searchOK;
+
+});
+
+
+if(!list.length){
+
+box.innerHTML=
+"<div class='empty'>No products found.</div>";
+
+return;
+
+}
+
+
+box.innerHTML=
+list.map(p=>`
+
+<div class="card">
+
+<img
+src="${p.image||''}"
+onerror="this.style.display='none'"
+>
+
+<div class="cardbody">
+
+<h3>
+${escapeHTML(p.name)}
+</h3>
+
+<div class="urdu">
+${escapeHTML(p.urdu||"")}
+</div>
+
+<div class="weight">
+${escapeHTML(p.weight||"")}
+</div>
+
+<div class="price">
+Rs ${Number(p.price).toLocaleString()}
+</div>
+
+<button
+class="gold"
+style="width:100%"
+onclick="addToCart('${p.id}')">
+
+Add to Cart
+
+</button>
+
+</div>
+
+</div>
+
+`).join("");
+
+};
+
+
+/* ADD CART */
+
+window.addToCart=function(id){
+
+const product=
+products.find(p=>p.id===id);
+
+if(!product)return;
+
+
+const existing=
+cart.find(p=>p.id===id);
+
+if(existing){
+
+existing.qty++;
+
+}else{
+
+cart.push({
+...product,
+qty:1
+});
+
+}
+
+renderCart();
+
+};
+
+
+/* QUANTITY */
+
+window.changeQuantity=function(id,amount){
+
+const item=
+cart.find(p=>p.id===id);
+
+if(!item)return;
+
+item.qty+=amount;
+
+if(item.qty<=0){
+
+cart=
+cart.filter(p=>p.id!==id);
+
+}
+
+renderCart();
+
+};
+
+
+/* CART */
+
+window.renderCart=function(){
+
+const box=
+document.getElementById("cartItems");
+
+if(!cart.length){
+
+box.innerHTML=
+"<div class='empty'>Your cart is empty.</div>";
+
+document.getElementById("cartTotal")
+.innerText="0";
+
+return;
+
+}
+
+
+let total=0;
+
+
+box.innerHTML=
+cart.map(item=>{
+
+const subtotal=
+item.price*item.qty;
+
+total+=subtotal;
+
+return `
+
+<div class="cartitem">
+
+<div>
+
+<b>
+${escapeHTML(item.name)}
+</b>
+
+<br>
+
+Rs ${item.price} × ${item.qty}
+
+</div>
+
+<div class="qty">
+
+<button
+onclick="changeQuantity('${item.id}',-1)">
+−
+</button>
+
+<button
+onclick="changeQuantity('${item.id}',1)">
++
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+
+document.getElementById("cartTotal")
+.innerText=
+total.toLocaleString();
+
+};
+
+
+/* PLACE ORDER */
+
+window.placeOrder=async function(){
+
+if(!cart.length){
+
+alert("Please add products to cart first.");
+
+return;
+
+}
+
+
+const name=
+document.getElementById("customerName")
+.value.trim();
+
+const phone=
+document.getElementById("customerPhone")
+.value.trim();
+
+const address=
+document.getElementById("customerAddress")
+.value.trim();
+
+const city=
+document.getElementById("customerCity")
+.value.trim();
+
+const payment=
+document.getElementById("paymentMethod")
+.value;
+
+const note=
+document.getElementById("customerNote")
+.value.trim();
+
+
+if(!name || !phone || !address || !city){
+
+alert(
+"Please fill Name, Phone, Address and City."
+);
+
+return;
+
+}
+
+
+let total=0;
+
+
+const orderItems=
+cart.map(item=>{
+
+const subtotal=
+item.price*item.qty;
+
+total+=subtotal;
+
+return {
+
+name:item.name,
+
+weight:item.weight,
+
+price:item.price,
+
+quantity:item.qty,
+
+subtotal:subtotal
+
+};
+
+});
+
+
+const orderID=
+"DC-"+Date.now()
+.toString()
+.slice(-8);
+
+
+const order={
+
+orderId:orderID,
+
+customerName:name,
+
+phone:phone,
+
+address:address,
+
+city:city,
+
+payment:payment,
+
+note:note,
+
+items:orderItems,
+
+total:total,
+
+status:"Processing",
+
+createdAt:new Date().toISOString()
+
+};
+
+
+/* SAVE CENTRAL ORDER */
+
+try{
+
+await addDoc(
+collection(db,"orders"),
+order
+);
+
+}
+catch(error){
+
+console.log(error);
+
+alert(
+"Order save نہیں ہوا۔ Firebase Rules check کریں۔"
+);
+
+return;
+
+}
+
+
+/* WHATSAPP MESSAGE */
+
+let message=
+`🛒 DC SUPER MART - NEW ORDER
+
+Order ID: ${orderID}
+
+Customer: ${name}
+
+Phone: ${phone}
+
+Address:
+${address}
+
+City / Area:
+${city}
+
+Payment:
+${payment}
+
+Products:
+`;
+
+
+orderItems.forEach((item,index)=>{
+
+message+=
+`
+${index+1}. ${item.name}
+${item.weight}
+Quantity: ${item.quantity}
+Price: Rs ${item.subtotal}
+`;
+
+});
+
+
+message+=
+`
+TOTAL: Rs ${total}
+
+STATUS: Processing
+`;
+
+
+if(note){
+
+message+=
+`
+NOTE:
+${note}
+`;
+
+}
+
+
+const whatsappURL=
+"https://wa.me/"+
+ADMIN_WHATSAPP+
+"?text="+
+encodeURIComponent(message);
+
+
+/*
+ WhatsApp opens with the order message ready.
+ Customer presses SEND.
+ */
+
+cart=[];
+
+renderCart();
+
+
+alert(
+"Order saved successfully. WhatsApp is opening..."
+);
+
+
+window.location.href=
+whatsappURL;
+
+};
+
+
+/* SHARE WEBSITE */
+
+window.shareStore=function(){
+
+const url=
+window.location.href.split("?")[0];
+
+
+if(navigator.share){
+
+navigator.share({
+
+title:"DC Super Mart",
+
+text:
+"DC Super Mart - Premium Pakistani Grocery Store",
+
+url:url
+
+});
+
+}else{
+
+navigator.clipboard
+.writeText(url);
+
+alert("Website link copied!");
+
+}
+
+};
+
+
+/* ADMIN OPEN */
+
+window.openAdmin=function(){
+
+document.getElementById("customerPage")
+.style.display="none";
+
+document.getElementById("adminPage")
+.style.display="block";
+
+window.scrollTo(0,0);
+
+};
+
+
+/* ADMIN CLOSE */
+
+window.closeAdmin=function(){
+
+document.getElementById("adminPage")
+.style.display="none";
+
+document.getElementById("customerPage")
+.style.display="block";
+
+};
+
+
+/* ADMIN LOGIN */
+
+window.loginAdmin=function(){
+
+const password=
+document.getElementById("adminPassword")
+.value;
+
+
+if(password===ADMIN_PASSWORD){
+
+document.getElementById("adminLogin")
+.style.display="none";
+
+document.getElementById("adminContent")
+.style.display="block";
+
+loadAdminOrders();
+
+loadAdminProducts();
+
+loadSettings();
+
+}else{
+
+alert("Wrong password.");
+
+}
+
+};
+
+
+/* ADMIN SECTION */
+
+window.showAdmin=function(id){
+
+document
+.querySelectorAll(".adminSection")
+.forEach(x=>
+x.classList.remove("active")
+);
+
+document
+.getElementById(id)
+.classList.add("active");
+
+
+if(id==="ordersSection"){
+
+loadAdminOrders();
+
+}
+
+if(id==="productsSection"){
+
+loadAdminProducts();
+
+}
+
+};
+
+
+/* LOAD ORDERS */
+
+window.loadAdminOrders=async function(){
+
+const processing=
+document.getElementById("processingOrders");
+
+const way=
+document.getElementById("wayOrders");
+
+const delivered=
+document.getElementById("deliveredOrders");
+
+
+processing.innerHTML="Loading...";
+
+way.innerHTML="Loading...";
+
+delivered.innerHTML="Loading...";
+
+
+try{
+
+const snap=
+await getDocs(collection(db,"orders"));
+
+
+const orders=
+snap.docs
+.map(d=>({
+id:d.id,
+...d.data()
+}))
+.sort((a,b)=>
+new Dat
