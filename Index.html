@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DC Super Mart</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f6f1e5;
+  color:#111;
+}
+header{
+  background:#050505;
+  color:#fff;
+  padding:14px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.logo{
+  font-size:22px;
+  font-weight:bold;
+  color:#d4af37;
+}
+.sub{
+  font-size:11px;
+  color:#ddd;
+  margin-top:3px;
+}
+button{
+  border:0;
+  border-radius:8px;
+  padding:10px 14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.gold{
+  background:#d4af37;
+  color:#000;
+}
+.dark{
+  background:#111;
+  color:#fff;
+}
+.hero{
+  padding:28px 15px;
+  text-align:center;
+  background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url("https://images.unsplash.com/photo-1601598851547-4302969d7b5f?auto=format&fit=crop&w=1200&q=80");
+  background-size:cover;
+  background-position:center;
+  color:#fff;
+}
+.hero h1{
+  margin:0 0 8px;
+  color:#d4af37;
+  font-size:30px;
+}
+.hero p{
+  margin:0;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:15px;
+}
+.search{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.categories{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+.categories button{
+  white-space:nowrap;
+  background:#111;
+  color:#fff;
+}
+.categories button.active{
+  background:#d4af37;
+  color:#000;
+}
+.products{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.card{
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+.product-img{
+  width:100%;
+  height:125px;
+  object-fit:cover;
+  background:#eee;
+}
+.card-body{
+  padding:9px;
+}
+.card h3{
+  font-size:14px;
+  margin:0 0 4px;
+}
+.urdu{
+  font-size:12px;
+  color:#777;
+}
+.weight{
+  font-size:12px;
+  color:#555;
+  margin:5px 0;
+}
+.price{
+  color:#b18a00;
+  font-size:16px;
+  font-weight:bold;
+  margin:5px 0 8px;
+}
+.add{
+  width:100%;
+  background:#050505;
+  color:#d4af37;
+  padding:9px 5px;
+}
+.section{
+  margin-top:22px;
+}
+.section-title{
+  font-size:21px;
+  margin-bottom:10px;
+  color:#111;
+}
+.cart-box,.checkout,.admin-box{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 3px 12px rgba(0,0,0,.1);
+}
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+.qty button{
+  padding:5px 9px;
+  background:#111;
+  color:#fff;
+}
+.total{
+  font-size:20px;
+  font-weight:bold;
+  margin-top:12px;
+}
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin:6px 0 10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:15px;
+}
+textarea{
+  min-height:80px;
+}
+.full{
+  width:100%;
+}
+.hidden{
+  display:none!important;
+}
+.admin-nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+.admin-nav button{
+  background:#111;
+  color:#fff;
+}
+.order{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:10px;
+}
+.order-status{
+  font-weight:bold;
+  color:#b18a00;
+}
+.product-admin{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid #eee;
+  padding:10px 0;
+}
+.small{
+  font-size:12px;
+  color:#666;
+}
+footer{
+  margin-top:30px;
+  background:#050505;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+}
+@media(max-width:500px){
+  .products{
+    grid-template-columns:repeat(3,1fr);
+  }
+  .product-img{
+    height:105px;
+  }
+  .card-body{
+    padding:7px;
+  }
+  .card h3{
+    font-size:12px;
+  }
+  .price{
+    font-size:14px;
+  }
+  .add{
+    font-size:11px;
+  }
+  .logo{
+    font-size:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-row">
+    <div>
+      <div class="logo">DC Super Mart</div>
+      <div class="sub">Premium Pakistani Grocery Store</div>
+    </div>
+    <div>
+      <button class="gold" onclick="shareStore()">Share</button>
+      <button class="dark" onclick="showAdmin()">Admin</button>
+    </div>
+  </div>
+</header>
+
+<div id="customerPage">
+
+<section class="hero">
+  <h1>DC Super Mart</h1>
+  <p>Quality Grocery • Best Prices • Easy Delivery</p>
+</section>
+
+<div class="container">
+
+  <input
+    id="searchBox"
+    class="search"
+    type="text"
+    placeholder="Search products..."
+    oninput="renderProducts()"
+  >
+
+  <div class="categories">
+    <button class="active" onclick="setCategory('All',this)">All</button>
+    <button onclick="setCategory('Grocery',this)">Grocery</button>
+    <button onclick="setCategory('Rice & Flour',this)">Rice & Flour</button>
+    <button onclick="setCategory('Oil & Ghee',this)">Oil & Ghee</button>
+    <button onclick="setCategory('Dairy',this)">Dairy</button>
+    <button onclick="setCategory('Beverages',this)">Beverages</button>
+    <button onclick="setCategory('Snacks',this)">Snacks</button>
+    <button onclick="setCategory('Household',this)">Household</button>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🛒 Our Products</div>
+    <div id="products" class="products"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🛍️ Your Cart</div>
+    <div class="cart-box">
+      <div id="cartItems"></div>
+      <div id="cartTotal" class="total">Total: Rs 0</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📦 Checkout</div>
+
+    <div class="checkout">
+
+      <input id="customerName" placeholder="Full Name">
+      <input id="customerPhone" placeholder="Phone Number">
+      <input id="customerAddress" placeholder="Full Delivery Address">
+      <input id="customerCity" placeholder="City / Area">
+
+      <select id="payment">
+        <option value="">Select Payment Method</option>
+        <option>Cash on Delivery</option>
+        <option>Bank Transfer</option>
+        <option>Other</option>
+      </select>
+
+      <textarea id="customerNote" placeholder="Order Note (Optional)"></textarea>
+
+      <button class="gold full" onclick="placeOrder()">
+        Place Order on WhatsApp
+      </button>
+
+      <p class="small">
+        Order details will be saved and WhatsApp will open with your order message.
+      </p>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ADMIN -->
+
+<div id="adminPage" class="hidden">
+
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">🔐 Admin Panel</div>
+
+    <div id="adminLogin" class="admin-box">
+      <h3>Admin Login</h3>
+
+      <input
+        id="adminPassword"
+        type="password"
+        placeholder="Enter Admin Password"
+      >
+
+      <button class="gold full" onclick="adminLogin()">
+        Login
+      </button>
+
+      <br><br>
+
+      <button class="dark full" onclick="showCustomer()">
+        Back to Store
+      </button>
+    </div>
+
+    <div id="adminDashboard" class="hidden">
+
+      <div class="admin-nav">
+        <button onclick="showAdminTab('orders')">Orders</button>
+        <button onclick="showAdminTab('products')">Products</button>
+        <button onclick="showAdminTab('settings')">Settings</button>
+        <button onclick="showCustomer()">Store</button>
+      </div>
+
+      <div id="adminOrdersTab">
+        <h3>📦 Customer Orders</h3>
+        <div id="ordersList">Loading orders...</div>
+      </div>
+
+      <div id="adminProductsTab" class="hidden">
+        <h3>🛒 Manage Products</h3>
+
+        <input id="newName" placeholder="Product Name">
+        <input id="newUrdu" placeholder="Urdu Name">
+        <input id="newPrice" type="number" placeholder="Price">
+        <input id="newWeight" placeholder="Weight">
+        
+        <select id="newCategory">
+          <option>Grocery</option>
+          <option>Rice & Flour</option>
+          <option>Oil & Ghee</option>
+          <option>Dairy</option>
+          <option>Beverages</option>
+          <option>Snacks</option>
+          <option>Household</option>
+        </select>
+
+        <input id="newImage" placeholder="Product Image URL (optional)">
+
+        <button class="gold full" onclick="addProduct()">
+          Add Product
+        </button>
+
+        <br><br>
+
+        <div id="adminProductsList"></div>
+      </div>
+
+      <div id="adminSettingsTab" class="hidden">
+
+        <h3>⚙️ Store Settings</h3>
+
+        <input id="storeNameSetting" placeholder="Store Name">
+        <input id="storeSubtitleSetting" placeholder="Store Subtitle">
+
+        <button class="gold full" onclick="saveSettings()">
+          Save Settings
+        </button>
+
+        <br><br>
+
+        <button class="dark full" onclick="changePassword()">
+          Change Admin Password
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+<footer>
+  <b>DC Super Mart</b><br>
+  Premium Pakistani Grocery Store
+</footer>
+
+
+<script type="module">
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBm_62mmqifhGYQhWjP6k6gLnwUEEIGwTA",
+  authDomain: "dc-super-mart.firebaseapp.com",
+  projectId: "dc-super-mart",
+  storageBucket: "dc-super-mart.firebasestorage.app",
+  messagingSenderId: "608035223366",
+  appId: "1:608035223366:web:360ccfe99a9cc43ce2d747",
+  measurementId: "G-JCJ8D5FB06"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const ADMIN_WHATSAPP = "923142908164";
+
+let category = "All";
+
+let cart = JSON.parse(localStorage.getItem("dc_cart") || "[]");
+
+let products = [
+
+{
+ id:"p1",
+ name:"Basmati Rice",
+ urdu:"باسمتی چاول",
+ price:390,
+ weight:"1 kg",
+ category:"Rice & Flour",
+ image:"https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p2",
+ name:"Wheat Flour",
+ urdu:"گندم کا آٹا",
+ price:1550,
+ weight:"10 kg",
+ category:"Rice & Flour",
+ image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p3",
+ name:"Cooking Oil",
+ urdu:"کوکنگ آئل",
+ price:610,
+ weight:"1 litre",
+ category:"Oil & Ghee",
+ image:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p4",
+ name:"Desi Ghee",
+ urdu:"دیسی گھی",
+ price:2450,
+ weight:"1 kg",
+ category:"Oil & Ghee",
+ image:"https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p5",
+ name:"Sugar",
+ urdu:"چینی",
+ price:185,
+ weight:"1 kg",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1581268499632-8c9c8b7d1b5a?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p6",
+ name:"Daal Masoor",
+ urdu:"دال مسور",
+ price:330,
+ weight:"1 kg",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p7",
+ name:"Daal Moong",
+ urdu:"دال مونگ",
+ price:390,
+ weight:"1 kg",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p8",
+ name:"Daal Chana",
+ urdu:"دال چنا",
+ price:300,
+ weight:"1 kg",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p9",
+ name:"Tea",
+ urdu:"چائے",
+ price:690,
+ weight:"450 g",
+ category:"Beverages",
+ image:"https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p10",
+ name:"Milk",
+ urdu:"دودھ",
+ price:290,
+ weight:"1 litre",
+ category:"Dairy",
+ image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p11",
+ name:"Biscuits",
+ urdu:"بسکٹ",
+ price:70,
+ weight:"1 pack",
+ category:"Snacks",
+ image:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p12",
+ name:"Mineral Water",
+ urdu:"منرل واٹر",
+ price:100,
+ weight:"1.5 litre",
+ category:"Beverages",
+ image:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p13",
+ name:"Washing Powder",
+ urdu:"واشنگ پاؤڈر",
+ price:390,
+ weight:"1 kg",
+ category:"Household",
+ image:"https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p14",
+ name:"Biryani Masala",
+ urdu:"بریانی مصالحہ",
+ price:123,
+ weight:"60 g",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p15",
+ name:"Salt",
+ urdu:"نمک",
+ price:80,
+ weight:"800 g",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1518110925495-5fe2fda044c9?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p16",
+ name:"Red Chilli Powder",
+ urdu:"لال مرچ پاؤڈر",
+ price:180,
+ weight:"200 g",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p17",
+ name:"Turmeric Powder",
+ urdu:"ہلدی پاؤڈر",
+ price:150,
+ weight:"200 g",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1615485291234-9d694a9b8d5c?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p18",
+ name:"Ketchup",
+ urdu:"کیچپ",
+ price:320,
+ weight:"500 g",
+ category:"Grocery",
+ image:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p19",
+ name:"Lemon Drink",
+ urdu:"لیموں ڈرنک",
+ price:150,
+ weight:"1.5 litre",
+ category:"Beverages",
+ image:"https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=500&q=80"
+},
+
+{
+ id:"p20",
+ name:"Dish Wash",
+ urdu:"برتن دھونے والا لیکوئڈ",
+ price:280,
+ weight:"500 ml",
+ category:"Household",
+ image:"https://images.unsplash.com/photo-1583947581924-a6d7f7a2c2a8?auto=format&fit=crop&w=500&q=80"
+}
+
+];
+
+
+function renderProducts(){
+
+  const box = document.getElementById("products");
+
+  const search =
+    document.getElementById("searchBox").value
+    .toLowerCase();
+
+  const filtered = products.filter(p => {
+
+    const categoryOK =
+      category === "All" ||
+      p.category === category;
+
+    const searchOK =
+      p.name.toLowerCase().includes(search) ||
+      p.urdu.toLowerCase().includes(search);
+
+    return categoryOK && searchOK;
+
+  });
+
+  box.innerHTML = "";
+
+  filtered.forEach(p => {
+
+    box.innerHTML += `
+      <div class="card">
+
+        <img
+          class="product-img"
+          src="${p.image}"
+          onerror="this.src='https://via.placeholder.com/500x400?text=DC+Super+Mart'"
+        >
+
+        <div class="card-body">
+
+          <h3>${p.name}</h3>
+
+          <div class="urdu">${p.urdu}</div>
+
+          <div class="weight">${p.weight}</div>
+
+          <div class="price">Rs ${p.price}</div>
+
+          <button
+            class="add"
+            onclick="addToCart('${p.id}')"
+          >
+            Add to Cart
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+  });
+
+}
+
+
+window.renderProducts = renderProducts;
+
+
+window.setCategory = function(c,btn){
+
+  category = c;
+
+  document
+    .querySelectorAll(".categories button")
+    .forEach(b => b.classList.remove("active"));
+
+  btn.classList.add("active");
+
+  renderProducts();
+
+};
+
+
+window.addToCart = function(id){
+
+  const product = products.find(p => p.id === id);
+
+  if(!product) return;
+
+  const found = cart.find(x => x.id === id);
+
+  if(found){
+    found.qty++;
+  }else{
+    cart.push({
+      id:product.id,
+      name:product.name,
+      price:product.price,
+      qty:1
+    });
+  }
+
+  saveCart();
+
+  renderCart();
+
+  alert(product.name + " added to cart");
+
+};
+
+
+function saveCart(){
+
+  localStorage.setItem(
+    "dc_cart",
+    JSON.stringify(cart)
+  );
+
+}
+
+
+function renderCart(){
+
+  const box =
+    document.getElementById("cartItems");
+
+  box.innerHTML = "";
+
+  let total = 0;
+
+  if(cart.length === 0){
+
+    box.innerHTML =
+      "<p>Your cart is empty.</p>";
+
+  }
+
+  cart.forEach(item => {
+
+    const subtotal =
+      item.price * item.qty;
+
+    total += subtotal;
+
+    box.innerHTML += `
+
+      <div class="cart-item">
+
+        <div>
+          <b>${item.name}</b><br>
+          Rs ${item.price} × ${item.qty}
+        </div>
+
+        <div class="qty">
+
+          <button
+            onclick="changeQty('${item.id}',-1)"
+          >−</button>
+
+          <button
+            onclick="changeQty('${item.id}',1)"
+          >+</button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  document.getElementById("cartTotal")
+    .innerText =
+    "Total: Rs " + total;
+
+}
+
+
+window.changeQty = function(id,change){
+
+  const item =
+    cart.find(x => x.id === id);
+
+  if(!item) return;
+
+  item.qty += change;
+
+  if(item.qty <= 0){
+
+    cart =
+      cart.filter(x => x.id !== id);
+
+  }
+
+  saveCart();
+
+  renderCart();
+
+};
+
+
+window.shareStore = async function(){
+
+  const url =
+    window.location.href.split("?")[0];
+
+  const data = {
+    title:"DC Super Mart",
+    text:"DC Super Mart - Premium Pakistani Grocery Store",
+    url:url
+  };
+
+  try{
+
+    if(navigator.share){
+
+      await navigator.share(data);
+
+      return;
+
+    }
+
+  }catch(e){}
+
+  try{
+
+    await navigator.clipboard.writeText(url);
+
+    alert("Website link copied! Ab WhatsApp/Facebook par share kar sakte ho.");
+
+    return;
+
+  }catch(e){}
+
+  prompt(
+    "Website link copy karein:",
+    url
+  );
+
+};
+
+
+window.showAdmin = function(){
+
+  document
+    .getElementById("customerPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminPage")
+    .classList.remove("hidden");
+
+};
+
+
+window.showCustomer = function(){
+
+  document
+    .getElementById("adminPage")
+    .classList.add("hidden");
+
+  document
+    .getElementById("customerPage")
+    .classList.remove("hidden");
+
+};
+
+
+window.adminLogin = function(){
+
+  const password =
+    document.getElementById("adminPassword").value;
+
+  const saved =
+    localStorage.getItem("dc_admin_password") || "123456";
+
+  if(password === saved){
+
+    document
+      .getElementById("adminLogin")
+      .classList.add("hidden");
+
+    document
+      .getElementById("adminDashboard")
+      .classList.remove("hidden");
+
+    loadOrders();
+
+    loadAdminProducts();
+
+  }else{
+
+    alert("Wrong password");
+
+  }
+
+};
+
+
+window.showAdminTab = function(tab){
+
+  document
+    .getElementById("adminOrdersTab")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminProductsTab")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminSettingsTab")
+    .classList.add("hidden");
+
+  if(tab === "orders"){
+
+    document
+      .getElementById("adminOrdersTab")
+      .classList.remove("hidden");
+
+    loadOrders();
+
+  }
+
+  if(tab === "products"){
+
+    document
+      .getElementById("adminProductsTab")
+      .classList.remove("hidden");
+
+    loadAdminProducts();
+
+  }
+
+  if(tab === "settings"){
+
+    document
+      .getElementById("adminSettingsTab")
+      .classList.remove("hidden");
+
+  }
+
+};
+
+
+window.placeOrder = async function(){
+
+  if(cart.length === 0){
+
+    alert("Cart empty hai.");
+
+    return;
+
+  }
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const phone =
+    document.getElementById("customerPhone").value.trim();
+
+  const address =
+    document.getElementById("customerAddress").value.trim();
+
+  const city =
+    document.getElementById("customerCity").value.trim();
+
+  const payment =
+    document.getElementById("payment").value;
+
+  const note =
+    document.getElementById("customerNote").value.trim();
+
+
+  if(!name || !phone || !address || !city || !payment){
+
+    alert("Please complete all required fields.");
+
+    return;
+
+  }
+
+
+  let total = 0;
+
+  cart.forEach(item => {
+
+    total += item.price * item.qty;
+
+  });
+
+
+  const orderId =
+    "DC" + Date.now();
+
+
+  const order = {
+
+    orderId:orderId,
+
+    customerName:name,
+
+    phone:phone,
+
+    address:address,
+
+    city:city,
+
+    payment:payment,
+
+    note:note,
+
+    items:cart,
+
+    total:total,
+
+    status:"Processing",
+
+    createdAt:new Date().toISOString()
+
+  };
+
+
+  try{
+
+    await addDoc(
+      collection(db,"orders"),
+      order
+    );
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Order save nahi ho saka. Please dobara try karein."
+    );
+
+    return;
+
+  }
+
+
+  let message =
+`🛒 DC Super Mart Order
+
+Order ID: ${orderId}
+
+Customer: ${name}
+Phone: ${phone}
+Address: ${address}
+City/Area: ${city}
+
+Payment: ${payment}
+
+Products:
+`;
+
+  cart.forEach(item => {
+
+    message +=
+`\n• ${item.name} × ${item.qty} = Rs ${item.price * item.qty}`;
+
+  });
+
+  message +=
+`\n\nTotal: Rs ${total}`;
+
+  if(note){
+
+    message +=
+    `\nNote: ${note}`;
+
+  }
+
+  message +=
+`\n\nStatus: Processing`;
+
+
+  cart = [];
+
+  saveCart();
+
+  renderCart();
+
+
+  alert(
+    "Order placed! Ab WhatsApp open hoga. WhatsApp mein Send button press kar dein."
+  );
+
+
+  const whatsappURL =
+    "https://wa.me/" +
+    ADMIN_WHATSAPP +
+    "?text=" +
+    encodeURIComponent(message);
+
+
+  window.location.href = whatsappURL;
+
+};
+
+
+async function loadOrders(){
+
+  const box =
+    document.getElementById("ordersList");
+
+  box.innerHTML =
+    "Loading orders...";
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(db,"orders")
+      );
+
+    if(snap.empty){
+
+      box.innerHTML =
+        "<p>No orders yet.</p>";
+
+      return;
+
+    }
+
+    box.innerHTML = "";
+
+    snap.forEach(docSnap => {
+
+      const o = docSnap.data();
+
+      box.innerHTML += `
+
+        <div class="order">
+
+          <b>Order ID:</b> ${o.orderId}<br>
+          <b>Customer:</b> ${o.customerName}<br>
+          <b>Phone:</b> ${o.phone}<br>
+          <b>Address:</b> ${o.address}<br>
+          <b>City:</b> ${o.city}<br>
+          <b>Payment:</b> ${o.payment}<br>
+
+          <br>
+
+          <b>Products:</b>
+
+          <ul>
+            ${(o.items || []).map(i =>
+              `<li>${i.name} × ${i.qty} — Rs ${i.price*i.qty}</li>`
+            ).join("")}
+          </ul>
+
+          <b>Total:</b> Rs ${o.total}
+
+          <p class="order-status">
+            Status: ${o.status || "Processing"}
+          </p>
+
+          <select
+            onchange="changeOrderStatus('${docSnap.id}',this.value)"
+          >
+
+            <option ${o.status==="Processing"?"selected":""}>
+              Processing
+            </option>
+
+            <option ${o.status==="On the way"?"selected":""}>
+              On the way
+            </option>
+
+            <option ${o.status==="Delivered"?"selected":""}>
+              Delivered
+            </option>
+
+          </select>
+
+        </div>
+
+      `;
+
+    });
+
+  }catch(error){
+
+    console.error(error);
+
+    box.innerHTML =
+      "<p>Orders load nahi ho rahe. Firebase rules check karein.</p>";
+
+  }
+
+}
+
+
+window.changeOrderStatus = async function(id,status){
+
+  try{
+
+    await updateDoc(
+      doc(db,"orders",id),
+      {status:status}
+    );
+
+    alert("Order status updated.");
+
+    loadOrders();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert("Status update nahi hua.");
+
+  }
+
+};
+
+
+window.addProduct = async function(){
+
+  const name =
+    document.getElementById("newName").value.trim();
+
+  const urdu =
+    document.getElementById("newUrdu").value.trim();
+
+  const price =
+    Number(document.getElementById("newPrice").value);
+
+  const weight =
+    document.getElementById("newWeight").value.trim();
+
+  const cat =
+    document.getElementById("newCategory").value;
+
+  const image =
+    document.getElementById("newImage").value.trim() ||
+    "https://via.placeholder.com/500x400?text=DC+Super+Mart";
+
+
+  if(!name || !price || !weight){
+
+    alert("Product name, price aur weight fill karein.");
+
+    return;
+
+  }
+
+
+  try{
+
+    await addDoc(
+      collection(db,"products"),
+      {
+        name:name,
+        urdu:urdu,
+        price:price,
+        weight:weight,
+        category:cat,
+        image:image
+      }
+    );
+
+    alert("Product added.");
+
+    document.getElementById("newName").value="";
+    document.getElementById("newUrdu").value="";
+    document.getElementById("newPrice").value="";
+    document.getElementById("newWeight").value="";
+    document.getElementById("newImage").value="";
+
+    loadFirebaseProducts();
+
+    loadAdminProducts();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert("Product add nahi hua.");
+
+  }
+
+};
+
+
+async function loadFirebaseProducts(){
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(db,"products")
+      );
+
+    if(snap.empty){
+
+      renderProducts();
+
+      return;
+
+    }
+
+    const firebaseProducts = [];
+
+    snap.forEach(d => {
+
+      const p = d.data();
+
+      firebaseProducts.push({
+
+        id:d.id,
+
+        name:p.name || "",
+        urdu:p.urdu || "",
+        price:Number(p.price || 0),
+        weight:p.weight || "",
+        category:p.category || "Grocery",
+        image:p.image || "https://via.placeholder.com/500x400?text=DC+Super+Mart"
+
+      });
+
+    });
+
+    products =
+      [...products.filter(p => !firebaseProducts.some(f => f.name === p.name)), ...firebaseProducts];
+
+    renderProducts();
+
+  }catch(error){
+
+    console.log("Firebase products unavailable, using default products.");
+
+    renderProducts();
+
+  }
+
+}
+
+
+async function loadAdminProducts(){
+
+  const box =
+    document.getElementById("adminProductsList");
+
+  box.innerHTML =
+    "Loading...";
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(db,"products")
+      );
+
+    if(snap.empty){
+
+      box.innerHTML =
+        "<p>No custom products added.</p>";
+
+      return;
+
+    }
+
+    box.innerHTML = "";
+
+    snap.forEach(d => {
+
+      const p = d.data();
+
+      box.innerHTML += `
+
+        <div class="product-admin">
+
+          <div>
+
+            <b>${p.name}</b><br>
+            <span class="small">
+              ${p.weight} — Rs ${p.price}
+            </span>
+
+          </div>
+
+          <button
+            class="dark"
+            onclick="deleteProduct('${d.id}')"
+          >
+            Delete
+          </button>
+
+        </div>
+
+      `;
+
+    });
+
+  }catch(error){
+
+    box.innerHTML =
+      "<p>Products load nahi ho rahe.</p>";
+
+  }
+
+}
+
+
+window.deleteProduct = async function(id){
+
+  if(!confirm("Delete this product?")) return;
+
+  try{
+
+    await deleteDoc(
+      doc(db,"products",id)
+    );
+
+    alert("Product deleted.");
+
+    loadAdminProducts();
+
+    loadFirebaseProducts();
+
+  }catch(error){
+
+    console.error(error);
+
+    alert("Product delete nahi hua.");
+
+  }
+
+};
+
+
+window.saveSettings = async function(){
+
+  const name =
+    document.getElementById("storeNameSetting").value.trim();
+
+  const subtitle =
+    document.getElementById("storeSubtitleSetting").value.trim();
+
+  try{
+
+    await setDoc(
+      doc(db,"settings","store"),
+      {
+        name:name,
+        subtitle:subtitle
+      }
+    );
+
+    alert("Settings saved.");
+
+  }catch(error){
+
+    console.error(error);
+
+    alert("Settings save nahi hui.");
+
+  }
+
+};
+
+
+window.changePassword = function(){
+
+  const newPassword =
+    prompt("Enter new admin password:");
+
+  if(!newPassword) return;
+
+  localStorage.setItem(
+    "dc_admin_password",
+    newPassword
+  );
+
+  alert("Password changed on this browser.");
+
+};
+
+
+async function loadSettings(){
+
+  try{
+
+    const snap =
+      await getDoc(
+        doc(db,"settings","store")
+      );
+
+    if(snap.exists()){
+
+      const s = snap.data();
+
+      if(s.name)
+        document.getElementById("storeNameSetting").value=s.name;
+
+      if(s.subtitle)
+        document.getElementById("storeSubtitleSetting").value=s.subtitle;
+
+    }
+
+  }catch(error){
+
+    console.log(error);
+
+  }
+
+}
+
+
+renderProducts();
+
+renderCart();
+
+loadFirebaseProducts();
+
+loadSettings();
+
+</script>
+
+</body>
+</html>
